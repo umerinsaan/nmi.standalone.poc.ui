@@ -4,9 +4,15 @@
 
   <!-- Input + Button -->
   <div class="flex space-x-4 items-center">
+    <input type="number" placeholder="Enter CardNumber" [(ngModel)]="cardNumber"
+     class="p-inputtext w-40 border rounded-lg p-2" />  
     <input type="number" placeholder="Enter amount" [(ngModel)]="amount"
       class="p-inputtext w-40 border rounded-lg p-2" />
-    <button pButton type="button" label="Start Transaction" class="p-button-success"></button>
+    <input type="text" placeholder="Enter cardExpiry" [(ngModel)]="cardExpiry"
+    class="p-inputtext w-40 border rounded-lg p-2" />
+    <input type="text" placeholder="Enter CVV" [(ngModel)]="CVV"
+    class="p-inputtext w-40 border rounded-lg p-2" />
+    <button pButton type="button" label="Start Transaction" class="p-button-success" (click)="startTransaction()"></button>
   </div>
 
   <!-- Raw JSON Response -->
@@ -23,7 +29,7 @@
         <th>Status</th>
         <th>Response</th>
         <th>Auth Code</th>
-        <th>Amount</th>
+        <th>CVV</th>
         <th>Method</th>
         <th>Date</th>
       </tr>

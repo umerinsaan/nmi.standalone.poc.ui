@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { FormsModule } from '@angular/forms';
+import { PaymentService } from './services/payment-service';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +13,13 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './app.scss'
 })
 export class App {
+  private paymentService  = inject(PaymentService);
   protected readonly title = signal('nmi.standalone.poc.ui');
 
-  amount: number | null = null;
+  amount: number | null = 1;
+  cardNumber: string | null = "4000000000002701";
+  cardExpiry: string = '1229';
+  CVV : string = '123';
   responseJson: any = null;
   tableData: any[] = [];
 
@@ -44,5 +49,17 @@ export class App {
         this.responseJson = mock;
       }
     }
+  }
+
+  startTransaction():void{
+    const dto = {
+      cardNumber: this.cardNumber,
+      amount :this.amount,
+      cardExpiry: this.cardExpiry,
+      CVV:this.CVV
+    }
+    this.paymentService.MakeSalePayment(dto).subscribe(res => {
+      this.responseJson = res;
+    });
   }
 }
